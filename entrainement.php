@@ -107,6 +107,8 @@
                 echo gettype($c); // boolean ( true à la valeur 1 et false à la valeur 0)
                 echo '<br>';
 
+                separateur();
+
                 echo '<h2>03 - Concaténation </h2>';
                 // La concaténation permet d'assembler des chaines de caractères les une avec les autres. (raccourci d'écriture)
 
@@ -417,6 +419,266 @@
                 $test = 'é';
                 echo 'Taille de la chaine contenue dans la variable test : ' . iconv_strlen($test) . '<hr>';
 
+                // substr
+                // permet de découper une chaine.
+                // substr(chaine, position_depart, nb_de_caractere)
+                $texte = 'Lorem ipsum dolor sit amet consectetur, adipisicing elit. Officiis dolorum explicabo velit odio minima, eos ipsam sit optio quisquam neque quia? Quo sequi ad ipsam a excepturi autem quam quae!
+                Asperiores facere ipsum ratione suscipit cupiditate sapiente, atque voluptatem cum placeat provident, sint esse voluptatum ad et! Deleniti possimus, ad odit labore voluptas numquam animi ipsa, dolorum molestias adipisci vero.';
+
+                echo substr($texte, 0, 200) . '...<a href="">Lire la suite</a>';
+
+                echo '<h2>08 - Fonction utilisateur</h2>';
+                // déclarée et exécutée par le développeur
+                // il est possible d'exécuter une fonction avant sa déclaration (ce qui n'est pas le cas pour une variable)
+                // c'est possible car l'interpréteur php va faire deux lectures du code
+                // une première lecture pour isoler toutes les fonctions et les pré charger 
+                // une deuxième lecture pour exécuter tout le code
+
+
+                // déclaration : 
+                function separateur()
+                {
+                    echo '<hr><hr><hr>';
+                }
+
+                // exécution :
+                separateur();
+
+                // fonction avec argument
+                // un arguement (parameter) est fourni à une fonction afin de permettre de modifier le comportement de la fonction
+
+                function dire_bonjour($qui)
+                {
+                    return 'Bonjour ' . $qui . ', bienvenue sur notre site<br>';
+                }
+
+                // avec un return, nous devons mettre un echo si on souhaite un affichage
+                // si un argument est attendu, il est obligatoire de le fournir sinon erreur php
+                echo dire_bonjour('Julien');
+                echo dire_bonjour('Elodie');
+                echo dire_bonjour('Florian');
+
+                $pseudo = 'Tintin09';
+                echo dire_bonjour($pseudo);
+
+                // Fonction pour calculer la TVA sur une valeur
+
+                function calcul_tva($valeur)
+                {
+                    return $valeur * 1.2;
+                }
+
+                echo '1000 avec une tva de 20% = ' . calcul_tva(1000) . '€<hr>';
+
+                // Pour améliorer cette fonction, il faudrait permettre de choisir aussi le taux tva afin que ce ne soit pas toujours 20%
+
+             
+
+                function calcul_tva_taux($valeur, $taux)
+                {
+                    return $valeur * $taux;
+                }
+
+                echo '1000 avec un taux de tva de 20% = ' . calcul_tva_taux(1000, 1.2) . '€<hr>';
+                echo '1000 avec un taux de tva de 5.5% = ' . calcul_tva_taux(1000, 1.055) . '€<hr>';
+                
+
+                // La même fonction avec $taux en argument facultatif
+                function calcul_tva_taux2($valeur, $taux = 1.2)
+                {
+                    return $valeur * $taux;
+                }
+                
+                echo '1000 avec un taux de tva de 20% = ' . calcul_tva_taux2(1000) . '€<hr>';
+                echo '1000 avec un taux de tva de 5.5% = ' . calcul_tva_taux2(1000, 1.055) . '€<hr>';
+
+                $taux = 1.2;  
+                echo gettype($taux);
+                
+                separateur();
+
+                // Environnement (scope)
+                // Gobal : le script complet
+                // Local : à l'intérieur des accolades d'une fonction
+                // L'existence des variables va dépendre de l'environnement ou elle est déclarée
+
+                $animal = 'chat';
+
+                function foret()
+                {
+                    $animal = 'loup';
+                    return "J'ai du un $animal en forêt<br>";
+                }
+
+                echo $animal . '<hr>'; // chat
+
+                echo foret(); // loup
+
+                separateur();
+
+                $pays = 'France'; // espace global
+
+                function affiche_pays()
+                {
+                    global $pays; // Le mot clé global permet d'aller chercher la variable dans l'espace global
+                    return "J'habite en $pays <hr>";
+                }
+
+                echo affiche_pays();
+
+                // Exercice : 
+                // Si la saison est printemps on utilise "au", si la température est comprise entre -1 et 1 on affiche "degré"
+
+
+                function meteo($saison, $temperature)
+                {
+                    if($saison == 'printemps')
+                    {
+                        $debut = 'Nous sommes au ' . $saison;
+                    }
+                    else
+                    {
+                        $debut = 'Nous sommes en ' . $saison;
+                    }
+
+                    if($temperature <= 1 && $temperature >= -1)
+                    {
+                        $suite = ', et il fait ' . $temperature . ' degré<hr>';
+                    }
+                    else
+                    {
+                        $suite = ', et il fait ' . $temperature . ' degrés<hr>';
+                    }
+
+                    return $debut . $suite;
+
+                }
+                
+
+                echo meteo('été', 30);
+                echo meteo('hiver', 0);
+                echo meteo('automne', 5);
+                echo meteo('printemps', 15);
+                echo meteo('printemps', -1);
+                
+                separateur();
+                
+                function meteo2($saison, $temperature)
+                {
+                    $article = 'en';
+                    $s = 's';
+                    
+                    if($saison == 'printemps')
+                    {
+                        $article = 'au';
+                    }
+
+                    if($temperature >= -1 && $temperature <= 1)
+                    {
+                        $s = '';
+                    }
+                    
+                    return 'Nous sommes ' . $article . ' ' . $saison . ', et il fait ' . $temperature . ' degré' . $s . '<hr>';
+                }
+                
+                echo meteo2('été', 30);
+                echo meteo2('hiver', 0);
+                echo meteo2('automne', 5);
+                echo meteo2('printemps', 15);
+                echo meteo2('printemps', -1);
+                
+                separateur();
+                
+                function meteo3($saison, $temperature)
+                {
+                    $debut = ($saison == 'printemps') ? 'Nous sommes au ' . $saison : 'Nous sommes en ' . $saison;
+                    $suite = ($temperature >= -1 && $temperature <=1) ? ', et il fait ' . $temperature . ' degré<hr>' : ', et il fait ' . $temperature . 'degrés<hr>';
+                    
+                    return $debut . $suite;
+                }
+                
+                echo meteo3('été', 65);
+                echo meteo3('hiver', -1);
+                echo meteo3('automne', 1);
+                echo meteo3('printemps', 10);
+                echo meteo3('printemps', 0);
+
+                echo '<h2>09 - Structure itérative : Boucles</h2>';
+                // Une boucle est un outil nous permettant de répéter un ensemble d'instruction
+
+                // pour mettre en place une boucle, nous avons besoin de 3 informations :
+                        // 01 - une valeur de départ (compteur)
+                        // 02 - une condition d'entrée (une question)
+                        // 03 - une incrémentation ou décrémentation pour modifier la valeur du compteur afin de ne pas avoir une boucle infinie
+                
+                // boucle while()
+                $i = 0;          // compteur
+                while($i < 10)   // condition
+                {
+                    echo $i;     // instruction
+                    $i++;        // incrémentation // $i = $i + 1 // $i += 1
+                }
+
+                separateur();
+
+                // boucle for()
+                // for(valeur_depart; condition; incrementation)
+                for($i = 0; $i < 10; $i++)
+                {
+                    echo $i;
+                }
+
+                echo '<hr>';
+
+
+
+                // faire en sorte de ne pas avoir le dernier - après le chiffre 9
+                // 0 - 1 - 2 - 3 - 4 - 5 - 6 - 7 - 8 - 9
+
+                for($i = 0; $i < 10; $i++)
+                {
+                    if($i == 9)
+                    {
+                        echo $i;
+                    }
+                    else
+                    {
+                        echo $i . ' - ';
+                    }
+                }
+
+                separateur();
+
+                $i = 0;
+                while($i < 10)
+                {
+                    if($i < 9)
+                    {
+                        echo $i . ' - ';
+                    }
+                    else
+                    {
+                        echo $i;
+                    }
+                    $i++;
+                }
+
+                separateur();
+
+                // Affichage de 0 à 9 dans un tableau html
+
+                echo '<table border="1" style="border-collapse: collapse; width: 50%; margin: 0 auto; text-align: center;">';
+                echo '<tr>';
+
+                $i = 0;
+                while($i < 10)
+                {
+                    echo '<td style="padding: 10px;">' . $i . '</td>';
+                    $i++;
+                }
+
+                echo '</tr>';
+                echo '</table>';
 
 
 
@@ -433,6 +695,26 @@
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                
         
 
         ?>
@@ -462,6 +744,7 @@
         <br>
         </div>
 
+        
     
 </body>
 </html>
