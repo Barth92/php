@@ -1,0 +1,11 @@
+body { margin: 0; background-color: #333; color: white; }
+* { box-sizing: border-box; }
+section { background-color: white; color: black; min-height: 500px; }
+nav { background-color: lightslategrey; }
+nav .conteneur {display: flex; justify-content: space-around;}
+nav a { color: white; padding: 5px 15px; text-decoration: none; }
+nav a:hover { background-color: darkred; }
+h1 { margin: 0; padding: 20px 0;}
+.conteneur {padding-top: 20px; text-align: center; }
+header { min-height: 140px; text-align: center;}
+footer { padding-top: 20px; text-align: center; }

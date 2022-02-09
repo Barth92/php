@@ -302,7 +302,6 @@
                 <           est strictement inférieur
                 >=          supérieur ou égal
                 <=          inférieur ou égal
-
                 */
 
                 $a1 = 1;
@@ -680,9 +679,155 @@
                 echo '</tr>';
                 echo '</table>';
 
+                echo '<h2>10 - Inclusion</h2>';
+
+                echo 'Premier appel avec include : <hr>';
+                include 'exemple.inc.php';
+                separateur();
+
+                echo 'Deuxième appel avec include_once : <hr>';
+                include_once 'exemple.inc.php';
+                separateur();
+
+                echo 'Premier appel avec require : <hr>';
+                require 'exemple.inc.php';
+                separateur();
+
+                echo 'Deuxième appel avec require_once : <hr>';
+                require_once 'exemple.inc.php';
+                separateur();
+
+                // include et require permettent d'inclure le contenu d'un fichier extérieur dans celui-ci.
+                // avec le _once on vérifie si le fichier à déja été appelé dans cette page, si c'est le cas on ne le rappelle pas !
+                // Différence entre le include et le require : 
+                    // Dans le cas d'une erreur (fichier non trouvé), include va déclencher un warning et la page continue à s'exécuter
+                    // Dans le cas d'une erreur (fichier non trouvé), require va déclencher une erreur fatale et bloque l'exécution du code à la suite.
+
+                echo '<h2>11 - Tableau de données ARRAY</h2>';
+
+                // tableau array est un nouveau type de données
+                // toujours contenu dans une variable, il permet de contenir un ensemble de valeur à l'inverse d'une variable simple qui ne peut contenir qu'une seule valeur
+                // Un tableau array ne peut avoir que deux colonnes : une colonne avec l'indice et une colonne avec la valeur correspondante à l'indice
+                // Il est possible d'avoir un tableau dans un tableau
+
+                // première façon de déclarer un tableau array
+                $tableau = array('lundi', 'mardi', 'mercredi', 'jeudi', 'vendredi');
+                $tableau2 = ['lundi', 'mardi', 'mercredi', 'jeudi', 'vendredi'];
+
+                // pour voir le contenu d'un tableau
+                // deux instruction d'affichage améliorées : 
+                // print_r()
+
+                echo '<pre>';
+                print_r($tableau);
+                echo '</pre>';
+
+                echo '<pre>';
+                print_r($tableau2);
+                echo '</pre>';
+
+                // var_dump()
+
+                echo '<pre>';
+                var_dump($tableau);
+                echo '</pre>';
+
+                //affichez la valeur "jeudi" en piochant dans le tableau avec echo
+                echo $tableau[3] . '<br>';
+
+                // on peut rajouter des éléments dans le tableau :
+                $tableau[] = 'samedi';
+                $tableau[] = 'dimanche';
+
+                echo '<pre>';
+                print_r($tableau);
+                echo '</pre>';
+
+                // autre façon de déclarer un tableau array
+                $tab_fruit[] = 'Fraise';
+                $tab_fruit[] = 'kiwi';
+                $tab_fruit[] = 'Pomme';
+                $tab_fruit[] = 'Banane';
 
 
+                echo '<pre>';
+                print_r($tab_fruit);
+                echo '</pre>';
 
+                $tab_legume = ['concombre', 'radis', 'courgette', 'salade'];
+
+                echo '<pre>';
+                print_r($tab_legume);
+                echo '</pre>';
+                
+                // il est possible de changer une des valeurs :
+                $tab_legume[3] = 'poivron';
+                
+                echo '<pre>';
+                print_r($tab_legume);
+                echo '</pre>';
+                
+                // il est possible de choisir nous même les indices d'un tableau
+                $tab_couleur = array('b' => 'bleu', 'r' => 'rouge', 'bl' => 'blanc', 'v' => 'violet');
+                
+                echo '<pre>';
+                print_r($tab_couleur);
+                echo '</pre>';
+                
+                echo $tab_couleur['v'] . '<br>';
+                
+                $user = array('pseudo' => 'Ryu77', 'mdp' => 'soleil', 'email' => 'ryu@gmail.com', 'adresse' => '12 rue de lexemple', 'cp' => 75000, 'ville' => 'Paris', 'sexe' => 'm');
+                
+                echo '<pre>';
+                print_r($user);
+                echo '</pre>';
+
+                echo 'Bonjour ' . $user['pseudo'] . ', bienvenue sur votre profil<br>';
+                echo 'Voici la liste de vos informations : ';
+                echo '<ul>';
+                echo "<li>$user[email]</li>";
+                echo "<li>$user[adresse]</li>";
+                echo "<li>$user[cp]</li>";
+                echo "<li>$user[ville]</li>";
+                echo '</ul>';
+
+                // Pour connaître la taille d'un tableau (le nb d'élément du tableau)
+                echo 'Taille du tableau user : ' . sizeof($user) . '<hr>';
+                echo 'Taille du tableau tableau : ' . count($tableau) . '<hr>';
+
+                echo '<ul>';
+                $i = 0;
+                while($i < count($tableau))
+                {
+                    echo '<li>' . $tableau[$i] . '</li>';
+                    $i++;
+                }
+                echo '</ul>';
+
+                // boucle foreach() spécifique aux tableau et aux objets
+
+                echo '<ul>';
+                foreach($user AS $v)
+                {
+                    echo '<li>' . $v . '</li>';
+                }
+                echo '</ul>';
+                
+                // une boucle foreach() va tourner autant de fois qu'il y a d'élément dans le tableau.
+                // dans les parenthèses du foreach(), on commence par nommer le tableau concerné puis le mot clé obligatoire.
+                // Après le mot clé AS on peut avoir 1 ou 2 variables.
+                // Avec une seule variable, cette variable contient la valeur du tableau en cours à chaque tour de boucle.
+                // Avec deux variables, la première reçoit l'indice en cours, la deuxième reçoit la valeur en cours.
+                
+                separateur();
+                
+                echo '<ul>';
+                foreach($user AS $ind => $val)
+                {
+                    echo '<li><b>' . $ind . '</b> : ' . $val . '</li>';
+                }
+                echo '</ul>';
+                
 
 
 
