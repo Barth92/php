@@ -28,11 +28,57 @@
                     print_r($_POST);
                     echo '</pre>';
 
-                    echo '<pre>';
-                    print_r($_GET);
-                    echo '</pre>';
+                    // Affichez proprement (avec echo) les informations provenants du form
+                    // exemple :
+                    // Pseudo : ...
+                    // Email : ...
+                    // Il faut penser au cas d'erreur possible (est-ce que ça existe !)
+
+                    if(!empty($_POST['pseudo']) && !empty($_POST['email']))
+                    {
+                        echo 'Votre Pseudo : ' . $_POST['pseudo'] . '<br>';
+                        echo 'Votre Email : ' . $_POST['email'] . '<br>';
+                        
+                        // trim() est une fonction prédéfinie permettant de supprimer les espaces en début et en fin de chaine (pas au milieu de la chaine)
+                        $pseudo = trim($_POST['pseudo']);
+                        $email = trim($_POST['email']);
+
+                        // Le pseudo doit avoir entre 4 et 14 caractères inclus sinon on affiche un message d'erreur pour l'utilisateur
+                        if(iconv_strlen($pseudo) < 4 || iconv_strlen($pseudo) > 14)
+                        {
+                            echo '<div class="alert alert-danger">⚠ Attention, Le pseudo doit avoir entre 4 et 14 caractères inclus</div>';
+                        }
+                        else
+                        {
+                            echo '<div class="alert alert-success mt-3">✅ Pseudo ok !</div>';
+                        }
+
+                        // controle sur la validité du format email sinon on affiche un message d'erreur pour l'utilisateur
+                        if(filter_var($email, FILTER_VALIDATE_EMAIL) == false)
+                        {
+                            echo '<div class="alert alert-danger mt-3">⚠ Attention, le format de votre email n\'est pas valide</div>';
+                        }
+                        else
+                        {
+                            echo '<div class="alert alert-success mt-3">✅ Email ok !</div>';
+                        }
+
+                    }
+
                 ?>
                 <hr>
+
+                    <!-- Attribut du form :
+                    ------------------
+                    method => La méthode utilisée pour récupérer les données (GET ou POST, si non précisé, c'est GET par défaut)
+                    action => l'url cible ou l'on va lors de la validation du form et la ou seront envoyées les données du form
+                    enctype = "multipart/form-data" => obligatoire pour récupérer les fichiers dans le cas d'un ou des input de type="file" ($FILES)   
+                    
+                    Attributs des champs :
+                    ----------------------
+                    id => pour lier avec le label, pour du css et / ou du js, pour une ancre 
+                    name => obmigatoire sur les champs pour récupérer leur données, représente l'indice que l'on retrouvera dans $_GET ou $_POST -->
+
                 <form action="" method="post" enctype="multipart/form-data" class="border p-3">
                     <div class="mb-3">
                         <label for="pseudo" class="form-label">Pseudo</label>
@@ -40,7 +86,7 @@
                     </div>
                     <div class="mb-3">
                         <label for="email" class="form-label">Email</label>
-                        <input type="text" class="form-control" name="email" value="" id="email">
+                        <input type="email" class="form-control" name="email" value="" id="email" required="required">
                     </div>
                     <div class="mb-3">
                         <input type="submit" class="btn btn-primary w-100" id="valider" value="Valider">

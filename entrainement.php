@@ -827,40 +827,74 @@
                     echo '<li><b>' . $ind . '</b> : ' . $val . '</li>';
                 }
                 echo '</ul>';
+
+                echo '<h2>12 - Class et object</h2>';
+
+                // Un objet est un conteneur virtuel toujours représenté par une variable
+                // En revanche, dans un objet on aura un ensemble d'informations (propriétée ou attribut de l'objet) ainso qu'un ensemble de fonction (méthode de l'objet)
+                // l'intérêt de l'objet c'est de regrouper des outils liés à un sujet au même endroit.
+                // un objet en PHP est toujours issu d'une class (plan de construction)
+                // Ensuite l'objet aura son existence propre
+                // Exemple : un utilisateur sur un eshop aura un objet panier qui ne sera pas le même qu'un autre objet panier d'un autre utilisateur.
+                // Construit de la même façon mais ensuite l'objet dépend des actions utilisateurs
+
+                // une class n'est pas sensible à la casse
+                // par convention d'écriture, la première lettre d'une class en majuscule
+                // une class est un plan de construction pour construire des objets
+
+
+                class Personnage
+                {
+                    // propriétés
+                    public $prenom = 'Arthur'; // public est un mot clé signifiant que l'information sera accessible directement au niveau de l'objet sinon il existe aussi : protected / private
+                    public $nom = 'Pendragon';
+                    public $profession = 'Roi';
+                    public $pays = 'Bretagne';
+
+                    // méthodes
+                    public function changer_prenom($nouveau)
+                    {
+                        return $this->prenom = $nouveau;
+                        // $this représente l'objet en cours à l'intérieur de la classe
+                    }
+
+                    public function changer_nom($nouveau)
+                    {
+                        return $this->nom = $nouveau;
+                    }
+
+                    public function changer_pays($nouveau)
+                    {
+                        return $this->pays = $nouveau;
+                    }
+                }
+
+                // création d'un objet
+                // pour créer un objet avec PHP, il faut utiliser le mot clé obligatoire new
+                $mon_objet1 = new Personnage;
+
+                // Afficher les propriétés d'un objet :
+                echo '<pre>'; var_dump($mon_objet1); echo '</pre>';
+                echo '<pre>'; print_r($mon_objet1); echo '</pre>';
+                
+                // Afficher les méthodes d'un objet : get_class_methods()
+                echo '<pre>'; print_r(get_class_methods($mon_objet1)); echo '</pre>';
+                
+                // pour piocher dans l'objet : -> 
+                echo $mon_objet1->prenom . ' ' . $mon_objet1->nom . '<br>';
+                
+                // on appel la méthode permettant de changer la propriété prenom
+                $mon_objet1->changer_prenom('Perceval');
+                echo $mon_objet1->prenom . ' ' . $mon_objet1->nom . '<br>';
+                echo '<pre>'; print_r($mon_objet1); echo '</pre>';
+                
+                $mon_objet2 = new Personnage;
+                echo '<pre>'; print_r($mon_objet2); echo '</pre>';
+                
+                $mon_objet2->prenom = 'Julien'; 
+                echo '<pre>'; print_r($mon_objet2); echo '</pre>';
                 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-                
-        
 
         ?>
         <br>
